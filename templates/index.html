@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>IPL Match Win Predictor</title>
+
+<style>
+
+body {
+font-family: Arial;
+background: linear-gradient(to right, #ff512f, #dd2476);
+height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.container {
+background: white;
+padding: 30px;
+border-radius: 15px;
+width: 420px;
+box-shadow: 0px 10px 25px rgba(0,0,0,0.2);
+}
+
+h2 {
+text-align: center;
+color: #333;
+}
+
+label {
+font-weight: bold;
+}
+
+input, select {
+width: 100%;
+padding: 10px;
+margin-top: 6px;
+margin-bottom: 14px;
+border-radius: 6px;
+border: 1px solid #ccc;
+}
+
+button {
+width: 100%;
+padding: 12px;
+background: #ff512f;
+color: white;
+border: none;
+border-radius: 8px;
+font-size: 16px;
+cursor: pointer;
+}
+
+button:hover {
+background: #dd2476;
+}
+
+.result {
+text-align: center;
+margin-top: 20px;
+font-size: 22px;
+font-weight: bold;
+color: green;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🏏 IPL Win Predictor</h2>
+
+<form action="/predict" method="post">
+
+<label>Batting Team</label>
+<select name="batting_team">
+<option selected>{{ batting_team }}</option>
+<option>CSK</option>
+<option>MI</option>
+<option>RCB</option>
+<option>KKR</option>
+<option>DC</option>
+<option>SRH</option>
+<option>RR</option>
+<option>LSG</option>
+<option>GT</option>
+<option>PBKS</option>
+</select>
+
+
+<label>Bowling Team</label>
+<select name="bowling_team">
+<option selected>{{ bowling_team }}</option>
+<option>CSK</option>
+<option>MI</option>
+<option>RCB</option>
+<option>KKR</option>
+<option>DC</option>
+<option>SRH</option>
+<option>RR</option>
+<option>LSG</option>
+<option>GT</option>
+<option>PBKS</option>
+</select>
+
+
+<label>Runs Left</label>
+<input type="number" name="runs_left" value="{{ runs_left or '' }}" required>
+
+<label>Balls Left</label>
+<input type="number" name="balls_left" value="{{ balls_left or '' }}" required>
+
+<label>Wickets Remaining</label>
+<input type="number" name="wickets" value="{{ wickets or '' }}" required>
+
+<label>Target Runs</label>
+<input type="number" name="target_runs" value="{{ target_runs or '' }}" required>
+
+<label>Current Run Rate</label>
+<input type="number" step="0.01" name="cur_run_rate" value="{{ cur_run_rate or '' }}" required>
+
+<label>Required Run Rate</label>
+<input type="number" step="0.01" name="req_run_rate" value="{{ req_run_rate or '' }}" required>
+
+<button type="submit">Predict Winning Chance</button>
+
+</form>
+
+
+{% if prediction %}
+
+<div class="result">
+
+{{ prediction }}
+
+<div style="
+margin-top:15px;
+background:#eee;
+border-radius:10px;
+overflow:hidden;
+">
+
+<div style="
+width:{{ prediction_prob }}%;
+background:green;
+padding:10px;
+color:white;
+text-align:center;
+font-weight:bold;
+">
+
+{{ prediction_prob }} %
+
+</div>
+
+</div>
+
+</div>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>
